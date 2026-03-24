@@ -127,3 +127,20 @@ JTBD для EdTech: 5 стейкхолдеров. Workforce upskilling 44.8% CAG
 ### Суть
 5-step: экспертная видимость, публичный трекшн, EN-площадки, «умные списки», стратегические советники. Принцип: «поезд, который уже едет».
 
+---
+
+## 2026-03-23 #10: Failure Modes — Loop of Death, Self-Consistency Trap, Hallucination in Action
+
+**Источник:** Medium (Loop of Death), Unite.AI (Hidden Failure Modes), GitHub (Awesome Agent Failures)
+**Тип:** failure modes (3 новых)
+**Куда:** PACK-autonomous-agents → AS.FM.009, AS.FM.010, AS.FM.011
+
+### Суть
+Три конкретных production failure modes:
+- **FM.009 Loop of Death** (критический): агент в retry loop, сжигает $ за минуты. 90% production failures — не hallucination, а это. Mitigation: timeout, max_retries=3-5, divergence detection, cost circuit breaker.
+- **FM.010 Self-Consistency Trap** (средний): majority vote даёт wrong consensus. Mitigation: external validation, diversity check, связь с GEPA (Pareto > majority vote).
+- **FM.011 Hallucination in Action** (критический): false text → annoying, false action → irreversible. Mitigation: read/write separation, dry-run, rollback, source-of-truth anchoring.
+
+### Reasoning
+Правило #12: FM с конкретикой = высокая ценность. Все три с именами, сценариями, severity, mitigation, примерами. Прямая связь с scheduler.sh (WP-132) и Trust Stack (AS.M.001).
+
