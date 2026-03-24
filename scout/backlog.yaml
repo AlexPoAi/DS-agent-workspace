@@ -5,17 +5,20 @@
 # Поля:
 #   id:        уникальный идентификатор задания (rt-NNN)
 #   title:     что исследовать (краткое)
+#   type:      scan (для Scout) | research (для сессии — Scout ИГНОРИРУЕТ)
 #   context:   детали, ограничения, ключевые слова
 #   wp:        связанный РП (номер)
 #   priority:  high | medium | low
 #   added:     дата добавления
-#   status:    pending | in_progress | done
+#   status:    pending | in_progress | done | moved_to_session
 #
+# Правило (AS.D.008): type: research → НЕ для Scout. Переносить в сессию.
 # Будущее: синхронизация с Linear (label: scout)
 
 tasks:
   - id: rt-001
     title: "Реальные кейсы автономных агентов в проде"
+    type: scan
     context: >
       Production-ready autonomous agents, не PoC/демо.
       Что искать: компании с агентами в реальных рабочих процессах,
@@ -24,74 +27,13 @@ tasks:
     wp: 144
     priority: high
     added: 2026-03-21
-    status: pending
-
-  - id: rt-003
-    title: "Fundraising best practices для seed-раунда EdTech/Intelligence Platform"
-    context: >
-      Исследовать лучшие практики привлечения seed-инвестиций ($5-15M) для
-      EdTech и Intelligence Development платформ. Фокус:
-
-      1. УСПЕШНЫЕ SEED-РАУНДЫ 2024-2026: EdTech/AI-education стартапы,
-         которые подняли $5M+ на seed. Кто, сколько, при какой оценке,
-         какой traction был на момент раунда. Особенно: при ARR <$500K.
-
-      2. INVESTOR PSYCHOLOGY: что инвесторы смотрят первым в pitch deck,
-         типичные причины отказа, red flags. Материалы от: YC (Dalton+Michael),
-         a16z, Sequoia, First Round Capital. Блоги GP.
-
-      3. СТРУКТУРА СДЕЛКИ: SAFE vs convertible note vs priced round —
-         что лучше для seed $10M. Типичные term sheet условия.
-         Cap table best practices для 2 основателей + команда.
-
-      4. BOTTOM-UP PROJECTIONS: как обосновать рост 5-6x за год
-         при seed-стадии. Примеры bottom-up моделей (сегмент × конверсия × ARPU).
-         Фреймворки для financial projections.
-
-      5. COMPETITOR POSITIONING: как EdTech-стартапы позиционируются
-         vs Coursera/Udemy/Khan. Матрицы сравнения из реальных pitch deck.
-
-      Результат записать в формате Pack-knowledge для ECO.M.001-fundraising.md.
-      Ключевые различения, паттерны, failure modes — с источниками.
-    wp: 142
-    priority: high
-    added: 2026-03-21
-    status: pending
-
-  - id: rt-004
-    title: "SOTA методы бизнес-моделирования для EdTech/SaaS"
-    context: >
-      Исследовать методы и фреймворки построения бизнес-модели.
-      Результат → Pack-knowledge для PACK-ecosystem/03-methods/.
-
-      1. BUSINESS MODEL CANVAS (Osterwalder): 9 блоков, применение к SaaS/EdTech,
-         типичные ошибки, примеры canvas для Coursera, Duolingo, Brilliant.
-
-      2. LEAN CANVAS (Ash Maurya): отличие от BMC, когда применять,
-         примеры для стартапов с подписочной моделью.
-
-      3. VALUE PROPOSITION DESIGN: Jobs-to-be-Done, Pains/Gains,
-         как связать с тирами платформы.
-
-      4. PRICING STRATEGY: value-based vs cost-plus vs competitor-based,
-         freemium psychology, trial→paid конверсия в EdTech (бенчмарки 2024-2026).
-
-      5. B2B vs B2C EdTech: как устроена монетизация Coursera for Business,
-         Udemy Business, Skillbox B2B. Revenue split, контрактные модели,
-         unit-экономика B2B (ACV, expansion rate, NDR).
-
-      6. РОЛЬ ПРЕДПРИНИМАТЕЛЯ vs БИЗНЕСМЕНА: различение в контексте S2R
-         (F6 Предприниматель vs F7 Бизнесмен). Obligations, methods, expectations.
-
-      Записать в формате Pack-knowledge: различения, паттерны, failure modes.
-      Каждый метод — отдельный файл ECO.M.{N}-{slug}.md.
-    wp: 153
-    priority: high
-    added: 2026-03-22
-    status: pending
+    status: done
+    closed: 2026-03-24
+    result: "AS.SOTA.002, case studies в captures 20-23 мар"
 
   - id: rt-002
     title: "SOTA методы написания текстов для соцсетей (антидетект AI)"
+    type: research
     context: >
       Методы написания текстов, которые не детектируются как AI-generated.
       Best practices для: Telegram, LinkedIn, Habr, X/Twitter.
@@ -101,4 +43,32 @@ tasks:
     wp: 144
     priority: high
     added: 2026-03-21
-    status: pending
+    status: moved_to_session
+    closed: 2026-03-24
+    result: "AS.D.008: research-задача, требует глубины → сессия с Исследователем"
+
+  - id: rt-003
+    title: "Fundraising best practices для seed-раунда EdTech/Intelligence Platform"
+    type: research
+    context: >
+      Исследовать лучшие практики привлечения seed-инвестиций ($5-15M) для
+      EdTech и Intelligence Development платформ.
+    wp: 142
+    priority: high
+    added: 2026-03-21
+    status: done
+    closed: 2026-03-24
+    result: "ECO.M.001, ECO.D.001, ECO.SOTA.001 через WP-170 (конверсия 38%)"
+
+  - id: rt-004
+    title: "SOTA методы бизнес-моделирования для EdTech/SaaS"
+    type: research
+    context: >
+      Исследовать методы и фреймворки построения бизнес-модели.
+      Результат → Pack-knowledge для PACK-ecosystem/03-methods/.
+    wp: 153
+    priority: high
+    added: 2026-03-22
+    status: done
+    closed: 2026-03-24
+    result: "ECO.M.001-003 через WP-170"
