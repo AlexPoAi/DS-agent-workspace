@@ -57,8 +57,13 @@ DS-agent-workspace/
 │   └── YYYY-MM-DD/
 │       └── extraction-report.md
 ├── scheduler/                     ← Планировщик (cron/launchd)
-│   └── YYYY-MM-DD/
-│       └── scheduler-report.md
+│   ├── reports/
+│   │   ├── SchedulerReport YYYY-MM-DD.md
+│   │   └── archive/              ← старые отчёты
+│   ├── feedback-triage/
+│   │   └── YYYY-MM-DD.md         ← QA бота (feedback_triage DB)
+│   ├── day-close.log
+│   └── open-sessions.log
 └── {new-agent}/                   ← будущие агенты
     └── ...
 ```
@@ -107,4 +112,4 @@ DS-agent-workspace/
 
 ---
 
-*Создан: 2026-03-21*
+*Создан: 2026-03-21. Обновлён: 2026-03-25 (WP-176: scheduler reports + feedback-triage)*
