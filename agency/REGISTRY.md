@@ -111,7 +111,21 @@ updated: 2026-03-27
 
 ---
 
-## 7. Supreme HR (Верховный HR-агент)
+## 7. FPF Консультант
+
+| | |
+|-|-|
+| **Домен** | FPF / SPF / domain-modeling / Pack VK-offee |
+| **Специализация** | Domain-contract моделирование, FPF-инспекция типологий, принципы A.3/A.7/A.12/A.17, различения |
+| **Модель по умолчанию** | gpt-4o (OpenAI Assistants API) |
+| **Инструменты** | `fpf-consult.sh`, vector store: FPF-Spec.md (43k строк) + DOMAIN-CONTRACTS-ALL |
+| **Нанимать когда** | Создание/проверка domain-contract карточек, FPF-инспекция, «это объект или процесс?», «это тип или экземпляр?» |
+| **Не нанимать когда** | Реализационные задачи кофейни, код, стратегия — он только моделирует |
+| **Файл** | `agency/agents/fpf-consultant.md` ✅ |
+
+---
+
+## 8. Supreme HR (Верховный HR-агент)
 
 | | |
 |-|-|
@@ -136,6 +150,7 @@ updated: 2026-03-27
 | Починить агента / среду | Environment Engineer | Sonnet |
 | Планирование недели / РП | Strategist | Opus |
 | Написать бота / API / скрипт | Code Engineer | Sonnet |
+| Domain-contract / FPF-инспекция | FPF Консультант | gpt-4o |
 | Быстрый поиск / простой вопрос | — (без агента) | Haiku |
 
 ---
