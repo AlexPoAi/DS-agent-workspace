@@ -15,10 +15,12 @@ agent: Синхронизатор
 |---|--------|--------|-------|
 | 1 | Сканирование кода | **✅** | 00:10:30 |
 | 2 | Стратег утренний | **✅** | 06:07:21 |
-| 5 | Проверка входящих | **✅** | 572470 сек назад |
+| 5 | Проверка входящих | **✅** | 583436 сек назад |
 
 ## Ошибки и предупреждения
 
 - [2026-04-02 04:04:26] [scheduler] WARN: strategist morning failed (will retry next dispatch)
+- [2026-04-02 09:10:07] [daily-telegram] ERROR: Telegram chat_id не найден
+- [2026-04-02 09:10:07] [scheduler] WARN: daily-telegram-report failed (will retry next dispatch)
 
 **Что делать:**
