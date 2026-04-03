@@ -15,7 +15,7 @@ agent: Синхронизатор
 |---|--------|--------|-------|
 | 1 | Сканирование кода | **✅** | 00:08:19 |
 | 2 | Стратег утренний | **✅** | 06:06:02 |
-| 5 | Проверка входящих | **✅** | 8298 сек назад |
+| 5 | Проверка входящих | **✅** | 10801 сек назад |
 
 ## Ошибки и предупреждения
 
@@ -26,5 +26,7 @@ agent: Синхронизатор
 - [2026-04-03 10:21:36] [scheduler] WARN: extractor inbox-check failed (will retry next dispatch)
 - [2026-04-03 12:00:04] [daily-telegram] ERROR: Telegram chat_id не найден
 - [2026-04-03 12:00:04] [scheduler] WARN: daily-telegram-report failed (will retry next dispatch)
+- [2026-04-03 15:00:05] [daily-telegram] ERROR: Telegram chat_id не найден
+- [2026-04-03 15:00:05] [scheduler] WARN: daily-telegram-report failed (will retry next dispatch)
 
 **Что делать:**
