@@ -7,24 +7,24 @@ agent: Синхронизатор
 
 # Отчёт планировщика: 2026-04-07
 
-## 🔴 Критический сбой — требуется внимание
+## 🟡 Среда работает с замечаниями
 
-> **Замечания:** strategist morning не запустился; note-review не запустился; 
+> **Замечания:** утреннее окно strategist на сегодня уже пропущено; 
 
 ## Результаты
 
 | # | Задача | Статус | Время |
 |---|--------|--------|-------|
 | 1 | Сканирование кода | **✅** | 23:05:54 |
-| 2 | Стратег утренний | **❌** | — |
-| 3 | Разбор заметок | **❌** | — |
-| 5 | Проверка входящих | **✅** | 259626 сек назад |
+| 2 | Стратег утренний | **🟡** | 15:25:12 |
+| 3 | Разбор заметок | **✅** | 23:07:26 |
+| 5 | Проверка входящих | **✅** | 23:07:25 |
 
 ## Runtime mode
 
-- Provider primary: **claude**
-- Provider reason: **only_claude_available**
-- Codex: **missing** (`codex_cli_not_found`)
+- Provider primary: **codex**
+- Provider reason: **both_available_preference_codex**
+- Codex: **available** (`login_ok`)
 - Claude: **available** (`auth_helper_ok`)
 - Runtime policy: **split**
 - Local control plane: **available** (`launchctl_scheduler_loaded`)
