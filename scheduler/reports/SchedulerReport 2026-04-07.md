@@ -18,13 +18,13 @@ agent: Синхронизатор
 | 1 | Сканирование кода | **✅** | 23:05:54 |
 | 2 | Стратег утренний | **❌** | — |
 | 3 | Разбор заметок | **❌** | — |
-| 5 | Проверка входящих | **✅** | 259552 сек назад |
+| 5 | Проверка входящих | **✅** | 259626 сек назад |
 
 ## Runtime mode
 
-- Provider primary: **codex**
-- Provider reason: **both_available_preference_codex**
-- Codex: **available** (`login_ok`)
+- Provider primary: **claude**
+- Provider reason: **only_claude_available**
+- Codex: **missing** (`codex_cli_not_found`)
 - Claude: **available** (`auth_helper_ok`)
 - Runtime policy: **split**
 - Local control plane: **available** (`launchctl_scheduler_loaded`)
@@ -37,5 +37,6 @@ agent: Синхронизатор
 ## Ошибки и предупреждения
 
 - [2026-04-07 23:05:54] [scheduler] WARN: strategist note-review failed (will retry next dispatch)
+- [2026-04-07 23:05:59] [scheduler] WARN: extractor inbox-check failed (will retry next dispatch)
 
 **Что делать:**
