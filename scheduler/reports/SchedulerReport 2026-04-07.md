@@ -18,21 +18,21 @@ agent: Синхронизатор
 | 1 | Сканирование кода | **❌** | — |
 | 2 | Стратег утренний | **❌** | — |
 | 3 | Разбор заметок | **❌** | — |
-| 5 | Проверка входящих | **✅** | 258879 сек назад |
+| 5 | Проверка входящих | **✅** | 258954 сек назад |
 
 ## Runtime mode
 
-- Provider primary: **unavailable**
-- Provider reason: **runtime_arbiter_missing**
-- Codex: **unknown** (`not_checked`)
-- Claude: **unknown** (`not_checked`)
-- Runtime policy: **unknown**
-- Local control plane: **unknown** (`not_checked`)
-- Cloud RAG: **unknown** (`not_checked`)
-- Cloud takeover scope: **unknown**
-- Cloud bot runtime: **unknown**
+- Provider primary: **codex**
+- Provider reason: **both_available_preference_codex**
+- Codex: **available** (`login_ok`)
+- Claude: **available** (`auth_helper_ok`)
+- Runtime policy: **split**
+- Local control plane: **available** (`launchctl_scheduler_loaded`)
+- Cloud RAG: **unknown** (`health_url_not_configured`)
+- Cloud takeover scope: **product-only**
+- Cloud bot runtime: **declared**
 - Runtime policy file: **present**
-- Runtime mode artifact: **missing**
+- Runtime mode artifact: **present**
 
 ## Ошибки и предупреждения
 
