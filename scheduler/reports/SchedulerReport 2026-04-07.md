@@ -9,22 +9,22 @@ agent: Синхронизатор
 
 ## 🔴 Критический сбой — требуется внимание
 
-> **Замечания:** code-scan не запустился; strategist morning не запустился; 
+> **Замечания:** strategist morning не запустился; note-review не запустился; 
 
 ## Результаты
 
 | # | Задача | Статус | Время |
 |---|--------|--------|-------|
-| 1 | Сканирование кода | **❌** | — |
+| 1 | Сканирование кода | **✅** | 23:05:54 |
 | 2 | Стратег утренний | **❌** | — |
 | 3 | Разбор заметок | **❌** | — |
-| 5 | Проверка входящих | **✅** | 259121 сек назад |
+| 5 | Проверка входящих | **✅** | 259552 сек назад |
 
 ## Runtime mode
 
-- Provider primary: **claude**
-- Provider reason: **only_claude_available**
-- Codex: **missing** (`codex_cli_not_found`)
+- Provider primary: **codex**
+- Provider reason: **both_available_preference_codex**
+- Codex: **available** (`login_ok`)
 - Claude: **available** (`auth_helper_ok`)
 - Runtime policy: **split**
 - Local control plane: **available** (`launchctl_scheduler_loaded`)
@@ -36,4 +36,6 @@ agent: Синхронизатор
 
 ## Ошибки и предупреждения
 
-Нет ошибок. ✅
+- [2026-04-07 23:05:54] [scheduler] WARN: strategist note-review failed (will retry next dispatch)
+
+**Что делать:**
