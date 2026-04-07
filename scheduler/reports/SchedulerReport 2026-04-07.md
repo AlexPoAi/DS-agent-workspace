@@ -36,7 +36,7 @@ agent: Синхронизатор
 
 ## Ошибки и предупреждения
 
-- [2026-04-07 23:05:54] [scheduler] WARN: strategist note-review failed (will retry next dispatch)
-- [2026-04-07 23:05:59] [scheduler] WARN: extractor inbox-check failed (will retry next dispatch)
+- Стратег: открытие дня: сегодняшнее окно выполнения уже закрыто
 
 **Что делать:**
+- **strategist morning:** дождаться следующего утреннего окна; это historical miss, а не текущий runtime crash
