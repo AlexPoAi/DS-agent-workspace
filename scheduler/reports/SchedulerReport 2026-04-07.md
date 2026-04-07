@@ -18,13 +18,13 @@ agent: Синхронизатор
 | 1 | Сканирование кода | **❌** | — |
 | 2 | Стратег утренний | **❌** | — |
 | 3 | Разбор заметок | **❌** | — |
-| 5 | Проверка входящих | **✅** | 258954 сек назад |
+| 5 | Проверка входящих | **✅** | 259121 сек назад |
 
 ## Runtime mode
 
-- Provider primary: **codex**
-- Provider reason: **both_available_preference_codex**
-- Codex: **available** (`login_ok`)
+- Provider primary: **claude**
+- Provider reason: **only_claude_available**
+- Codex: **missing** (`codex_cli_not_found`)
 - Claude: **available** (`auth_helper_ok`)
 - Runtime policy: **split**
 - Local control plane: **available** (`launchctl_scheduler_loaded`)
