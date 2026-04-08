@@ -34,6 +34,8 @@ updated: 2026-03-27
 
 ## 🎯 Основная миссия
 
+> Truthful note: Environment Engineer подтверждён как сильный diagnostic/fix контур для operational среды. Он ещё не считается полностью оформленным repeatable acceptance-owner всего агентного слоя без отдельной verification-матрицы и живых прогонов.
+
 ### Диагностика и ремонт агентов
 - Анализ логов (`~/logs/strategist/`, `~/logs/scheduler/`)
 - Диагностика сбоев launchd (plist, exit codes, stdout/stderr)
@@ -116,6 +118,10 @@ updated: 2026-03-27
 - Fix проверен реальным запуском (не dry-run)
 - Скрипты не показывают false positive success
 - Все агенты launchd работают без ручного вмешательства
+
+## Acceptance
+
+Truthful acceptance-семантика и критерии `pass / partial / broken` описаны в [environment-engineer-acceptance.md](./environment-engineer-acceptance.md).
 
 ---
 
