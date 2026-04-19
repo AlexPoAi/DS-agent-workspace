@@ -15,14 +15,14 @@ agent: Синхронизатор
 |---|--------|--------|-------|
 | 1 | Сканирование кода | **✅** | 00:08:06 |
 | 2 | Стратег утренний | **✅** | 05:00:40 |
-| 5 | Проверка входящих | **❌** | 23:00:01 |
+| 5 | Проверка входящих | **✅** | 12:02:19 |
 
 ## Runtime mode
 
 - Provider primary: **codex**
-- Provider reason: **both_available_preference_codex**
+- Provider reason: **only_codex_available**
 - Codex: **available** (`login_ok`)
-- Claude: **available** (`auth_status_ok`)
+- Claude: **degraded** (`auth_status_failed`)
 - Runtime policy: **split**
 - Local control plane: **available** (`launchctl_scheduler_loaded`)
 - Cloud RAG: **unknown** (`health_url_not_configured`)
@@ -33,6 +33,4 @@ agent: Синхронизатор
 
 ## Ошибки и предупреждения
 
-- Синхронизатор: отчёт планировщика: статус устарел для текущего окна
-
-**Что делать:**
+Нет ошибок. ✅
