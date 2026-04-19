@@ -153,6 +153,20 @@ updated: 2026-03-27
 
 ---
 
+## 10. Knowledge Registry Curator (Библиотекарь)
+
+| | |
+|-|-|
+| **Домен** | `DS-strategy`, extractor outputs, notes registry, domain mapping |
+| **Специализация** | Реестр заметок, доменная карта, pack coverage, orphan notes, handoff в стратегический слой |
+| **Модель по умолчанию** | Sonnet |
+| **Инструменты** | extractor reports, `UNPROCESSED-NOTES-REPORT`, `INBOX-TASKS`, `WeekPlan`, Pack-реестры |
+| **Нанимать когда** | Нужно разложить заметки по доменам, собрать `Notes Registry`, показать missing domains и подготовить strategist handoff |
+| **Не нанимать когда** | Нужны weekly-решения, инженерная реализация Extractor или доменная реализация конкретного WP |
+| **Файл** | `agency/agents/knowledge-registry-curator.md` ✅ |
+
+---
+
 ## Матрица выбора
 
 | Задача | Агент | Модель |
@@ -160,6 +174,7 @@ updated: 2026-03-27
 | Подобрать агента под задачу | Supreme HR | Sonnet |
 | Написать рецептуру / стандарт | VK Coffee Analyst | Sonnet |
 | Разобрать свежий склад + ABC + закупки | Warehouse Demand Analyst | Sonnet |
+| Собрать реестр заметок / карту доменов | Knowledge Registry Curator | Sonnet |
 | Письмо архитектору / анализ парка | Park Architect | Sonnet |
 | Исправить ГПХ / кадровый вопрос | HR Specialist | Sonnet |
 | Починить агента / среду | Environment Engineer | Sonnet |
