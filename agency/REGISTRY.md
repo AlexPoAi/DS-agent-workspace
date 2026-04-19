@@ -153,12 +153,12 @@ updated: 2026-03-27
 
 ---
 
-## 10. Knowledge Registry Curator (Библиотекарь)
+## 10. Knowledge Registry Curator
 
 | | |
 |-|-|
 | **Домен** | `DS-strategy`, extractor outputs, notes registry, domain mapping |
-| **Специализация** | Реестр заметок, доменная карта, pack coverage, orphan notes, handoff в стратегический слой |
+| **Специализация** | Реестр заметок, доменная карта, pack coverage, orphan notes, handoff в стратегический слой; русское описание роли — `Библиотекарь` |
 | **Модель по умолчанию** | Sonnet |
 | **Инструменты** | extractor reports, `UNPROCESSED-NOTES-REPORT`, `INBOX-TASKS`, `WeekPlan`, Pack-реестры |
 | **Нанимать когда** | Нужно разложить заметки по доменам, собрать `Notes Registry`, показать missing domains и подготовить strategist handoff |
