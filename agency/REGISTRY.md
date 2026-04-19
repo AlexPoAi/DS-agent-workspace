@@ -139,12 +139,27 @@ updated: 2026-03-27
 
 ---
 
+## 9. Warehouse Demand Analyst (Аналитик склада и спроса)
+
+| | |
+|-|-|
+| **Домен** | VK-offee `PACK-warehouse` + `knowledge-base/Отчёты для бота` |
+| **Специализация** | Остатки, продажи, ABC-приоритизация, рекомендации по закупке/перезатарке |
+| **Модель по умолчанию** | Sonnet |
+| **Инструменты** | `warehouse_reports_pipeline.py`, `warehouse_full_loop.sh`, `WH.REGISTRY`, складские карточки |
+| **Нанимать когда** | Нужно быстро разобрать новые файлы Жанны и получить actionable план закупки |
+| **Не нанимать когда** | Нужен ремонт инфраструктуры или стратегический план без данных склада |
+| **Файл** | `agency/agents/warehouse-demand-analyst.md` ✅ |
+
+---
+
 ## Матрица выбора
 
 | Задача | Агент | Модель |
 |--------|-------|--------|
 | Подобрать агента под задачу | Supreme HR | Sonnet |
 | Написать рецептуру / стандарт | VK Coffee Analyst | Sonnet |
+| Разобрать свежий склад + ABC + закупки | Warehouse Demand Analyst | Sonnet |
 | Письмо архитектору / анализ парка | Park Architect | Sonnet |
 | Исправить ГПХ / кадровый вопрос | HR Specialist | Sonnet |
 | Починить агента / среду | Environment Engineer | Sonnet |
