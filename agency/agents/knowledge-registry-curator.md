@@ -149,6 +149,11 @@ updated: 2026-04-19
 | `WeekPlan` / `SESSION-CONTEXT` | стратегический контекст недели |
 | Pack-реестры | проверка покрытия доменов |
 
+### 🧩 Primary skill
+
+- `agency/skills/knowledge-registry-curator/notes-registry-and-domain-mapping.md`
+- Позже мигрирует в `PACK-agent-skills` в рамках `WP-82`
+
 ### 📝 Контракт найма
 
 **Делает:**
