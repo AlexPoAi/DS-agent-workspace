@@ -86,6 +86,8 @@ created: 2026-04-19
 ### Шаг 5 — Доменный skill
 Следовать детальному протоколу:
 `VK-offee/PACK-warehouse/03-methods/WH.METHOD.001-zhanna-biweekly-intake-and-processing-skill (Скилл кладовщика: двухнедельный intake и обработка документов Жанны).md`
+и операционному decision-skill:
+`agency/skills/warehouse-demand-analyst/warehouse-manager-decision-protocol.md`
 
 ---
 
@@ -157,6 +159,7 @@ created: 2026-04-19
 | `warehouse_reports_pipeline.py` | Генерация карточек и сводок |
 | `sync-google-sheets.py` | Intake файлов из Google Drive |
 | Telegram routing | Короткий отчёт по результатам |
+| `warehouse-manager-decision-protocol.md` | Запрещает отчётный шум и ведёт к manager-ready решению |
 
 ### 📝 Контракт найма
 
