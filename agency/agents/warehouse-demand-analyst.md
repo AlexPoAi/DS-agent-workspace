@@ -111,6 +111,12 @@ created: 2026-04-19
 `VK-offee/PACK-warehouse/03-methods/WH.METHOD.001-zhanna-biweekly-intake-and-processing-skill (Скилл кладовщика: двухнедельный intake и обработка документов Жанны).md`
 и операционному decision-skill:
 `agency/skills/warehouse-demand-analyst/warehouse-manager-decision-protocol.md`
+и ingestion-skill:
+`agency/skills/warehouse-demand-analyst/warehouse-spreadsheet-ingestion-excellence.md`
+и ABC-skill:
+`agency/skills/warehouse-demand-analyst/warehouse-abc-intake-and-matching.md`
+и PDF line-item skill:
+`agency/skills/warehouse-demand-analyst/warehouse-pdf-line-item-intelligence.md`
 и PDF/ABC skill-extension:
 `VK-offee/PACK-warehouse/03-methods/WH.METHOD.004-pdf-invoice-ocr-agent-protocol (Протокол OCR-разбора PDF накладных по строкам).md`
 

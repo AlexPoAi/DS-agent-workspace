@@ -12,6 +12,11 @@ status: active
 Этот skill запрещает агенту склада превращаться в парсер файлов и заставляет его
 работать как предметный исполнитель для руководителя.
 
+Он работает не один, а как orchestration-layer поверх специализированных sub-skills:
+- `warehouse-spreadsheet-ingestion-excellence.md`
+- `warehouse-abc-intake-and-matching.md`
+- `warehouse-pdf-line-item-intelligence.md`
+
 Итог работы должен отвечать не на вопрос:
 `какие документы пришли`,
 а на вопрос:
