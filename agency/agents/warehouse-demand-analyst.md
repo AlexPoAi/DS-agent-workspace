@@ -45,6 +45,8 @@ created: 2026-04-19
 - Выдавать список: что заказывать срочно, что держать в норме, что замедлять/распродавать.
 - Нормализовать битые SKU и убирать document-noise до формирования отчёта руководителю.
 - Разводить supplier routing для `Тэйсти Кофе`, `Субмарина`, `UNICAVA` и food/dessert-контура.
+- Держать стабильный weekly `ABC`-intake и использовать его как обязательный сигнал приоритета закупки.
+- Разбирать `PDF`-накладные каскадно: `text extraction -> table/line extraction -> OCR fallback -> confidence -> manual review`.
 
 ### Управленческий вывод
 - Собирать короткий action-plan на период (сегодня/неделя/2 недели).
@@ -82,6 +84,8 @@ created: 2026-04-19
 - очистить битые названия;
 - отделить direct reorder-позиции от food/dessert аналитики;
 - проверить, не схлопнуты ли `Субмарина` и `Тэйсти Кофе` в один поставщик по drip-линейке.
+- проверить, что `ABC` действительно загружен и сопоставлен с нормализованными SKU;
+- для `PDF`-накладных различать machine-readable и scanned документы и не поднимать низкоуверенные строки в decision layer.
 
 ### Шаг 3 — Рекомендации
 Сформировать 4 списка:
@@ -104,6 +108,8 @@ created: 2026-04-19
 `VK-offee/PACK-warehouse/03-methods/WH.METHOD.001-zhanna-biweekly-intake-and-processing-skill (Скилл кладовщика: двухнедельный intake и обработка документов Жанны).md`
 и операционному decision-skill:
 `agency/skills/warehouse-demand-analyst/warehouse-manager-decision-protocol.md`
+и PDF/ABC skill-extension:
+`VK-offee/PACK-warehouse/03-methods/WH.METHOD.004-pdf-invoice-ocr-agent-protocol (Протокол OCR-разбора PDF накладных по строкам).md`
 
 ---
 
