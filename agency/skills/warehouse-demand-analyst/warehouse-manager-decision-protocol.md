@@ -62,6 +62,62 @@ status: active
 
 ## Обязательная логика решения
 
+### 0. File ingestion excellence gate
+
+Агент обязан считать чтение входящих файлов частью своей предметной компетенции,
+а не случайной технической деталью пайплайна.
+
+Любой файл, который прислал менеджер из реального мира (`xlsx/csv/pdf/google sheet`),
+должен проходить через проверку качества чтения:
+- найден ли реальный data-range, а не только title/header блок;
+- не потеряны ли строки из-за `read_only`, merged cells, hidden rows/columns, filters;
+- нет ли summary/service-rows, которые ошибочно приняты за SKU;
+- корректно ли определены header row, name/SKU column, qty/revenue/price columns;
+- совпадает ли число строк в локальной материализации с фактическим числом строк в источнике;
+- есть ли признаки truncation, broken encoding, formula-loss, sheet mis-detection.
+
+Если файл физически существует, но локальная материализация неполная,
+агент обязан считать это не "пустым входом", а `ingestion defect`.
+
+В таком случае агент обязан явно зафиксировать:
+- какой файл пострадал;
+- какой метод чтения дал неверный результат;
+- как выглядит фактический data-range в источнике;
+- какой safer reading method нужен для production;
+- влияет ли дефект на manager decision layer.
+
+### 0.1. Excel / Google Sheets reading policy
+
+Для `xlsx/xls/google sheets` агент обязан придерживаться best-effort порядка чтения:
+
+1. Сначала определить workbook/sheet structure:
+- список листов;
+- sheet dimensions;
+- где начинается фактическая таблица;
+- есть ли merged headers / service blocks / totals.
+
+2. Нельзя слепо считать:
+- первый лист правильным;
+- первые 10-20 строк всей таблицей;
+- `read_only` режим безопасным по умолчанию;
+- `csv`-экспорт эквивалентом исходного листа без проверки.
+
+3. Для production-качества агент обязан предпочитать тот способ чтения,
+который сохраняет фактический data-range:
+- normal workbook mode, если `read_only` режет range;
+- проверку `calculate_dimension`, `max_row/max_column`, живых строк;
+- sheet-specific parsing, а не случайный "best non-empty sheet".
+
+4. После materialization агент обязан валидировать:
+- сколько строк и колонок ожидалось;
+- сколько реально прочитано;
+- где начинается header row;
+- сколько строк matched/unmatched пошло дальше в domain logic.
+
+5. Если sheet читается неоднозначно, агент не имеет права молча деградировать
+до "ABC не загружен" или "файл пустой". Он обязан поднять `manual review`
+с конкретным root-cause.
+
 ### 0A. ABC ingestion gate
 
 Если в текущем цикле есть `ABC`-файл, агент обязан:
