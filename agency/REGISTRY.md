@@ -1,7 +1,7 @@
 ---
 type: agency-registry
 version: 1.1
-updated: 2026-03-27
+updated: 2026-04-22
 ---
 
 # Реестр ИИ-агентов DS-агентства
@@ -167,6 +167,20 @@ updated: 2026-03-27
 
 ---
 
+## 11. Park Permitting & Infrastructure Coordinator
+
+| | |
+|-|-|
+| **Домен** | `VK-offee/PACK-park-development`, внешние согласования, инфраструктурные запросы, официальный документный цикл |
+| **Специализация** | Официальные письма и запросы, реквизиты отправителя, clean-docs, сохранение в Drive, tracking входящих и follow-up |
+| **Модель по умолчанию** | Sonnet |
+| **Инструменты** | `PACK-park-development`, Google Drive, `COMM/DOC/WP` карточки, реестры проекта |
+| **Нанимать когда** | Нужно подготовить официальный запрос, довести письмо до `ready-to-send`, сохранить документ и зафиксировать follow-up |
+| **Не нанимать когда** | Нужен анализ проектной документации, архитектурное решение или общая weekly-стратегия |
+| **Файл** | `agency/agents/park-permitting-infrastructure-coordinator.md` ✅ |
+
+---
+
 ## Матрица выбора
 
 | Задача | Агент | Модель |
@@ -175,6 +189,7 @@ updated: 2026-03-27
 | Написать рецептуру / стандарт | VK Coffee Analyst | Sonnet |
 | Разобрать свежий склад + ABC + закупки | Warehouse Demand Analyst | Sonnet |
 | Собрать реестр заметок / карту доменов | Knowledge Registry Curator | Sonnet |
+| Подготовить официальный запрос / follow-up по Парку | Park Permitting & Infrastructure Coordinator | Sonnet |
 | Письмо архитектору / анализ парка | Park Architect | Sonnet |
 | Исправить ГПХ / кадровый вопрос | HR Specialist | Sonnet |
 | Починить агента / среду | Environment Engineer | Sonnet |
