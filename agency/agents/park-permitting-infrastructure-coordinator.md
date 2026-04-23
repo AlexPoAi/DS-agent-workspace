@@ -58,6 +58,7 @@ updated: 2026-04-22
 - **Не считать черновик завершённым документом**: пока не подставлены реквизиты, не сохранён clean-file и не зафиксирован status, цикл не закрыт
 - **Не терять след документа**: каждый документ должен иметь Pack-карточку или ссылку на неё
 - **Не путать каналы**: draft, Drive, отправка и входящий номер — это разные состояния
+- **Не отправлять без согласования пользователя**: внешнее письмо или заявление по Парку нельзя отправлять, пока пользователь не просмотрел документ и явно не подтвердил отправку
 - **Не давать юридических заключений**: агент координирует документный цикл, а не заменяет юриста
 
 ---
@@ -165,7 +166,9 @@ Status: [draft / ready-to-send / sent / waiting / answered]
 ### 🧩 Primary skill
 
 - `agency/skills/park-permitting-infrastructure-coordinator/park-official-document-cycle.md`
+- `agency/skills/park-permitting-infrastructure-coordinator/rf-official-correspondence-polish.md`
 - Каноническая Pack-версия: `PACK-agent-skills/03-skills/AGENT.SKILL.002-park-official-document-cycle (Скилл официального документного цикла Park).md`
+- Каноническая Pack-версия: `PACK-agent-skills/03-skills/AGENT.SKILL.005-rf-official-correspondence-polish-for-park (Скилл доведения официальной корреспонденции РФ для Park).md`
 
 ### 📝 Контракт найма
 
