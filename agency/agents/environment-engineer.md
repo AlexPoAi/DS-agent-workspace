@@ -123,6 +123,26 @@ updated: 2026-03-27
 
 Truthful acceptance-семантика и критерии `pass / partial / broken` описаны в [environment-engineer-acceptance.md](./environment-engineer-acceptance.md).
 
+## Skills
+
+- [Bounded Work Product Ritual](../skills/environment-engineer/bounded-work-product-ritual.md)
+  - использовать, когда работа идёт в живом грязном дереве и нужно не смешивать
+    slice между собой;
+  - последовательность жёсткая:
+    - открыть bounded `WP`;
+    - назначить primary/support агента;
+    - ограничить write-set;
+    - закрыть slice truthfully;
+    - только потом делать отдельный `commit/push`.
+
+- [FPF -> SRT -> SPF Domain Ritual](../skills/environment-engineer/fpf-srt-spf-domain-ritual.md)
+  - использовать, когда инженерный контур создаёт или меняет domain/subdomain слой;
+  - последовательность жёсткая:
+    - `FPF` — различить domain boundaries;
+    - `SRT` — разложить уже различённое;
+    - `SPF` — формализовать в role-card / skill / registry / WP;
+  - `SRT` не считается source-of-truth для границ домена.
+
 ---
 
 ## ═══ DS-СЛОЙ ═══
@@ -152,6 +172,7 @@ Truthful acceptance-семантика и критерии `pass / partial / bro
 - Правит скрипты среды (close-task.sh, daily-report.sh)
 - Обновляет экзокортекс от Церена (update.sh)
 - Восстанавливает git credential chain
+- При domain-layer изменениях работает через ритуал `FPF -> SRT -> SPF`, а не от интуиции
 
 **Не делает:**
 - Доменные задачи VK-offee → VK Coffee Analyst
