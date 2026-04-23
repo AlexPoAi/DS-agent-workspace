@@ -115,6 +115,8 @@ created: 2026-04-19
 `agency/skills/warehouse-demand-analyst/warehouse-spreadsheet-ingestion-excellence.md`
 и ABC-skill:
 `agency/skills/warehouse-demand-analyst/warehouse-abc-intake-and-matching.md`
+и document-to-decision skill:
+`agency/skills/warehouse-demand-analyst/warehouse-document-to-decision-mapping.md`
 и PDF line-item skill:
 `agency/skills/warehouse-demand-analyst/warehouse-pdf-line-item-intelligence.md`
 и PDF/ABC skill-extension:
@@ -191,6 +193,7 @@ created: 2026-04-19
 | `sync-google-sheets.py` | Intake файлов из Google Drive |
 | Telegram routing | Короткий отчёт по результатам |
 | `warehouse-manager-decision-protocol.md` | Запрещает отчётный шум и ведёт к manager-ready решению |
+| `warehouse-document-to-decision-mapping.md` | Фиксирует цепочку `документ -> поля -> метрики -> управленческий вывод` |
 
 ### 📝 Контракт найма
 
