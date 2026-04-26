@@ -27,7 +27,7 @@ agent: Синхронизатор
 - Codex: **available** (`login_ok`)
 - Claude: **available** (`auth_status_ok`)
 - Runtime policy: **split**
-- Local control plane: **available** (`launchctl_scheduler_loaded`)
+- Local control plane: **degraded** (`status_dir_present_scheduler_missing`)
 - Cloud RAG: **unknown** (`health_url_not_configured`)
 - Cloud takeover scope: **product-only**
 - Cloud bot runtime: **vps**
