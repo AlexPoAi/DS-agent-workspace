@@ -24,6 +24,12 @@
 
 **Различение:** Код агентов → DS-autonomous-agents (instrument). Данные агентов → здесь (governance). Утверждённые решения → DS-my-strategy (governance).
 
+**Важно:** наличие папки агента в этом репозитории не означает, что для неё существует отдельный живой `launchd`/runtime сервис. Здесь смешаны:
+- live runtime core (`strategist`, `extractor`, `scheduler`);
+- artifact-bus для результатов;
+- research/trajectory слои (`scout`);
+- заготовки под будущие роли (`verifier`, `{new-agent}`).
+
 ---
 
 ## 3. Структура
@@ -32,7 +38,7 @@
 DS-agent-workspace/
 ├── CLAUDE.md                      ← этот файл
 ├── REPO-TYPE.md
-├── scout/                         ← Разведчик (R23)
+├── scout/                         ← Research/trajectory слой, не обязательный live runtime
 │   ├── backlog.yaml               ← бэклог заданий Разведчику
 │   ├── results/
 │   │   └── YYYY/MM/DD/
@@ -47,16 +53,16 @@ DS-agent-workspace/
 │       ├── accepted.md
 │       ├── rejected.md
 │       └── archive/
-├── verifier/                      ← Верификатор (VR.R.001)
+├── verifier/                      ← Заготовка/placeholder роли, не подтверждённый runtime
 │   └── YYYY-MM-DD/
 │       └── verify-report.md
-├── strategist/                    ← Стратег (R1)
+├── strategist/                    ← Live core role (R1), сценарии обычно запускает scheduler
 │   └── YYYY-MM-DD/
 │       └── dayplan-draft.md
-├── extractor/                     ← Экстрактор (R2)
+├── extractor/                     ← Live core role (R2)
 │   └── YYYY-MM-DD/
 │       └── extraction-report.md
-├── scheduler/                     ← Планировщик (cron/launchd)
+├── scheduler/                     ← Live core control plane (cron/launchd)
 │   ├── reports/
 │   │   ├── SchedulerReport YYYY-MM-DD.md
 │   │   └── archive/              ← старые отчёты
@@ -80,17 +86,24 @@ DS-agent-workspace/
 
 Формат выхода определяется agent-card в DS-autonomous-agents.
 
-### 4.2. Именование папок
+### 4.2. Truth for runtime
+
+Если нужно понять, что реально живо сейчас, смотреть нужно не на список папок, а на:
+- `launchctl`
+- `~/.local/state/exocortex/status/*`
+- `DS-strategy/current/AGENTS-STATUS.md`
+
+### 4.3. Именование папок
 
 Имя папки = имя роли (lowercase, kebab-case). Примеры: `scout`, `verifier`, `strategist`, `extractor`, `night-wp-runner`.
 
-### 4.3. Retention
+### 4.4. Retention
 
 - Результаты хранятся 30 дней
 - Архивация при Week Close (перемещение в `{agent}/archive/`)
 - meta.yaml сохраняется для статистики
 
-### 4.4. Pipeline raw → approved
+### 4.5. Pipeline raw → approved
 
 ```
 Агент создаёт артефакт
