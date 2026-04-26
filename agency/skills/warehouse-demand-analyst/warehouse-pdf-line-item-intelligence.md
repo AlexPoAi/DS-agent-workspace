@@ -12,6 +12,16 @@ status: active
 Разбирать накладные не до “preview text”, а до line-item ledger:
 `supplier -> invoice -> date -> sku -> qty -> unit price -> total -> confidence`.
 
+## Общий discipline gate
+
+Применять `agency/skills/common/codex-karpathy-discipline.md`.
+
+Для PDF это значит:
+- не считать preview text полноценным разбором;
+- не поднимать низкоуверенные OCR-строки в закупочное решение;
+- не править supplier map без evidence из строки или карточки;
+- проверять confidence и manual-review список до manager output.
+
 ## Обязательные шаги
 
 1. Определить тип PDF:

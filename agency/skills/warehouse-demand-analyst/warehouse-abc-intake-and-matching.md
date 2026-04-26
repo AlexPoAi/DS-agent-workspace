@@ -12,6 +12,16 @@ status: active
 Делать из weekly `ABC` не артефакт “для галочки”, а реальный сигнал
 приоритета закупки и анти-перезатарки.
 
+## Общий discipline gate
+
+Применять `agency/skills/common/codex-karpathy-discipline.md`.
+
+Для ABC это значит:
+- не угадывать класс SKU при слабом match;
+- не создавать новые alias-правила без evidence;
+- не менять target stock только потому, что позиция кажется важной;
+- проверять matched/unmatched и выносить спорное в manual review.
+
 ## Обязательные шаги
 
 1. Найти актуальный `ABC`-источник:

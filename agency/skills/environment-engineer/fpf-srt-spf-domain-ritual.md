@@ -28,6 +28,17 @@ migration_target: /Users/alexander/Github/DS-strategy/PACK-agent-skills/03-skill
 - `WP-90` дополнительно закрепил guardrail:
   - `SRT` — это placement layer, а не source-of-truth для domain/subdomain boundaries.
 
+## Общий discipline gate
+
+Перед изменением доменной структуры применять:
+`agency/skills/common/codex-karpathy-discipline.md`.
+
+Особенно важно:
+- явно назвать допущения о границе домена;
+- выбрать минимальный formalization layer;
+- не создавать новый Pack/skill/agent, если достаточно обновить существующий;
+- проверить, что diff не захватил соседние домены.
+
 ## Когда запускать
 
 - Когда нужно определить домен
