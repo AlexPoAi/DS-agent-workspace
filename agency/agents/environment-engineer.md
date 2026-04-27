@@ -125,15 +125,9 @@ Truthful acceptance-семантика и критерии `pass / partial / bro
 
 ## Skills
 
-- [Bounded Work Product Ritual](../skills/environment-engineer/bounded-work-product-ritual.md)
-  - использовать, когда работа идёт в живом грязном дереве и нужно не смешивать
-    slice между собой;
-  - последовательность жёсткая:
-    - открыть bounded `WP`;
-    - назначить primary/support агента;
-    - ограничить write-set;
-    - закрыть slice truthfully;
-    - только потом делать отдельный `commit/push`.
+- [AGENT.SKILL.001 — Engineer Ritual Sequence](../../../DS-strategy/PACK-agent-skills/03-skills/AGENT.SKILL.001-engineer-ritual-sequence%20%28%D0%A1%D0%BA%D0%B8%D0%BB%D0%BB%20%D0%B8%D0%BD%D0%B6%D0%B5%D0%BD%D0%B5%D1%80%D0%B0%3A%20%D1%80%D0%B8%D1%82%D1%83%D0%B0%D0%BB%20%D1%80%D0%B5%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20%D0%B8%D0%BD%D0%B6%D0%B5%D0%BD%D0%B5%D1%80%D0%BD%D0%BE%D0%B9%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8%29.md)
+  - канонический инженерный ритуал для bounded `WP`, truthful closeout и closure gate;
+  - локальный дубликат bounded ritual больше не поддерживается отдельным файлом.
 
 - [FPF -> SRT -> SPF Domain Ritual](../skills/environment-engineer/fpf-srt-spf-domain-ritual.md)
   - использовать, когда инженерный контур создаёт или меняет domain/subdomain слой;
