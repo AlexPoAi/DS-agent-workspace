@@ -189,6 +189,20 @@ updated: 2026-04-27
 
 ---
 
+## 12. Financial Consultant
+
+| | |
+|-|-|
+| **Домен** | `DS-finance` — cash discipline, finance views, project funding, межконтурные финансовые verdict |
+| **Специализация** | `freeze / keep / invest`, funding gap, различение `opex / capex`, financial view по `VK Coffee`, `Park` и следующим доменам |
+| **Модель по умолчанию** | Sonnet |
+| **Инструменты** | `DS-strategy/current`, finance-related `WP`, domain source docs, будущие `Finance View` |
+| **Нанимать когда** | Нужно понять, что можно тратить, что заморозить, сколько не хватает на проект и какой cash verdict честный |
+| **Не нанимать когда** | Нужна бухгалтерская проводка, инженерный runtime fix или чистая weekly orchestration без финансового вопроса |
+| **Файл** | `agency/agents/financial-consultant.md` ✅ |
+
+---
+
 ## Матрица выбора
 
 | Задача | Агент | Модель |
@@ -198,6 +212,7 @@ updated: 2026-04-27
 | Разобрать свежий склад + ABC + закупки | Warehouse Demand Analyst | Sonnet |
 | Собрать реестр заметок / карту доменов | Knowledge Registry Curator | Sonnet |
 | Подготовить официальный запрос / follow-up по Парку | Park Permitting & Infrastructure Coordinator | Sonnet |
+| Собрать finance view / funding gap / cash verdict | Financial Consultant | Sonnet |
 | Письмо архитектору / анализ парка | Park Architect | Sonnet |
 | Исправить ГПХ / кадровый вопрос | HR Specialist | Sonnet |
 | Починить агента / среду | Environment Engineer | Sonnet |
