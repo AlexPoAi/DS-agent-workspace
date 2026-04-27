@@ -54,18 +54,17 @@ DS-agent-workspace/
 │       ├── rejected.md
 │       └── archive/
 ├── verifier/                      ← Заготовка/placeholder роли, не подтверждённый runtime
-│   └── YYYY-MM-DD/
-│       └── verify-report.md
+│   └── README.md                  ← truth-note о placeholder-статусе
 ├── strategist/                    ← Live core role (R1), сценарии обычно запускает scheduler
-│   └── YYYY-MM-DD/
-│       └── dayplan-draft.md
+│   └── .gitkeep                   ← runtime truth смотрим в status/log layer, не здесь
 ├── extractor/                     ← Live core role (R2)
-│   └── YYYY-MM-DD/
-│       └── extraction-report.md
+│   └── extraction-reports/        ← реальные extraction reports текущего контура
+│       └── YYYY-MM-DD-inbox-check.md
 ├── scheduler/                     ← Live core control plane (cron/launchd)
 │   ├── reports/
 │   │   ├── SchedulerReport YYYY-MM-DD.md
 │   │   └── archive/              ← старые отчёты
+│   ├── scheduler-reports/         ← legacy historical path до выравнивания структуры
 │   ├── feedback-triage/
 │   │   └── YYYY-MM-DD.md         ← QA бота (feedback_triage DB)
 │   ├── day-close.log
@@ -80,11 +79,20 @@ DS-agent-workspace/
 
 ### 4.1. Размещение
 
-Каждый агент пишет в свою папку. Структура внутри — по усмотрению агента:
+Каждый агент пишет в свою папку, но исторически структура получилась не полностью унифицированной:
 - Scout: `scout/results/YYYY/MM/DD/` (иерархия год/месяц/день) + `scout/backlog.yaml` + `scout/trajectory/`
-- Остальные: `{agent-name}/YYYY-MM-DD/` (плоская структура по дате)
+- Extractor: `extractor/extraction-reports/YYYY-MM-DD-inbox-check.md`
+- Scheduler: текущий truth-path `scheduler/reports/`, плюс legacy-хвост `scheduler/scheduler-reports/`
+- Strategist: runtime результаты не считаем канонически живущими в этой папке; truth смотрим через status/log layer и `DS-strategy/current/*`
 
 Формат выхода определяется agent-card в DS-autonomous-agents.
+
+### 4.1.1. Legacy vs current
+
+- `scheduler/reports/` — текущий канонический путь для свежих scheduler reports.
+- `scheduler/scheduler-reports/` — исторический архивный хвост; не считать его live source-of-truth.
+- `extractor/extraction-reports/` — текущий канонический путь для extraction reports в этом repo.
+- `strategist/` и `verifier/` сейчас не являются надёжным местом для оценки live активности роли.
 
 ### 4.2. Truth for runtime
 
