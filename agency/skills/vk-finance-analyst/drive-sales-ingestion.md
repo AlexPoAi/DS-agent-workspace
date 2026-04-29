@@ -1,67 +1,89 @@
 # Скилл: drive-sales-ingestion
 
 > **Агент:** vk-finance-analyst
-> **Назначение:** Забрать последние Саби-отчёты из Google Drive, нормализовать, сохранить в data-layer
+> **Назначение:** Забрать Саби-отчёты из Drive (Продажи + Выручка), нормализовать, переместить обработанные файлы в «Обработано»
 
 ---
 
-## Предусловия
+## Жизненный цикл файлов (ВАЖНО)
 
-Перед запуском проверить:
-1. Существует `VK-offee/.github/scripts/token.pickle` (авторизация Drive API)
-2. Существует `VK-offee/saby-integration/google_drive_parser.py`
-3. Папка `DS-finance-private/business-finance/data-layer/` доступна для записи
+```
+Жанна загружает → [Новые документы]
+                         ↓
+          vk-finance-analyst читает и обрабатывает
+                         ↓
+          перемещает в [Обработано]
+                         ↓
+          нормализованные данные → data-layer → Finance View
+```
+
+**Правило:** обработанный файл ВСЕГДА перемещается из «Новые документы» в «Обработано». Файл в «Новые документы» = ещё не обработан.
 
 ---
 
 ## Папки Drive (зафиксированы)
 
-| Тип данных | Folder ID | Ссылка |
-|-----------|-----------|--------|
-| Продажи | `17Q7UI2mltbDlKoJrWE6dYchwIvux3mKU` | [открыть](https://drive.google.com/drive/folders/17Q7UI2mltbDlKoJrWE6dYchwIvux3mKU) |
-| Выручка | `1E6aKSFEtLXnIk-8RMAc7fxp5nc2rWqly` | [открыть](https://drive.google.com/drive/folders/1E6aKSFEtLXnIk-8RMAc7fxp5nc2rWqly) |
+| Папка | Folder ID | Ссылка |
+|-------|-----------|--------|
+| **Новые документы** (inbox) | `1Jg1Zgj2_ueTV6-NQamAU8XCPalFNhO8W` | [открыть](https://drive.google.com/drive/folders/1Jg1Zgj2_ueTV6-NQamAU8XCPalFNhO8W) |
+| **Обработано** (archive) | `1WanukzWeuqJgUQ7N8YkG9oC23-DIRGjT` | [открыть](https://drive.google.com/drive/folders/1WanukzWeuqJgUQ7N8YkG9oC23-DIRGjT) |
+| **Продажи** (тематическая) | `17Q7UI2mltbDlKoJrWE6dYchwIvux3mKU` | [открыть](https://drive.google.com/drive/folders/17Q7UI2mltbDlKoJrWE6dYchwIvux3mKU) |
+| **Выручка** (тематическая) | `1E6aKSFEtLXnIk-8RMAc7fxp5nc2rWqly` | [открыть](https://drive.google.com/drive/folders/1E6aKSFEtLXnIk-8RMAc7fxp5nc2rWqly) |
 
-> Карта всех папок Drive: `DS-strategy/exocortex/reference-google-drive-vkoffee.md`
+> Карта всех папок: `DS-strategy/exocortex/reference-google-drive-vkoffee.md`
+
+---
+
+## Предусловия
+
+- `VK-offee/.github/scripts/credentials.json` — credentials Drive API
+- `VK-offee/saby-integration/google_drive_parser.py` — парсер
 
 ---
 
 ## Алгоритм ingestion
 
-### 1. Получить список файлов из Drive
+### 1. Инициализация
 
 ```python
-# Шаблон вызова через google_drive_parser.py
-# Файл: VK-offee/saby-integration/google_drive_parser.py
-# Credentials: VK-offee/.github/scripts/credentials.json
-# Token: VK-offee/.github/scripts/token.pickle
-
-import sys
+import sys, re
+from datetime import datetime
 sys.path.insert(0, '/Users/alexander/Github/VK-offee/saby-integration')
-from google_drive_parser import GoogleDriveParser
+from google_drive_parser import SabyGoogleDriveParser
 
-parser = GoogleDriveParser(
-    credentials_path='/Users/alexander/Github/VK-offee/.github/scripts/credentials.json',
-    token_path='/Users/alexander/Github/VK-offee/.github/scripts/token.pickle'
+parser = SabyGoogleDriveParser(
+    credentials_file='/Users/alexander/Github/VK-offee/.github/scripts/credentials.json'
 )
-
-# Листинг папки Продажи
-files = parser.list_files('1g2Pq-cYVT2cSkd9DwBCV-EJBHYDvzHw9')
-# Ожидаемые имена: Продажи_YYYY-MM-DD_YYYY-MM-DD.xlsx, Выручка_YYYY-MM-DD_YYYY-MM-DD.xlsx
+service = parser.service
 ```
 
-### 2. Найти последние файлы
-
-Приоритет выбора файла:
-1. Самая поздняя дата окончания в имени файла (формат `_YYYY-MM-DD.xlsx` в конце)
-2. Если несколько файлов с одной датой — взять наибольший по размеру
-3. Скачивать ОБА типа: `Продажи_*.xlsx` и `Выручка_*.xlsx`
+### 2. Проверить «Новые документы» — есть ли необработанные файлы
 
 ```python
-import re
-from datetime import datetime
+INBOX_ID = '1Jg1Zgj2_ueTV6-NQamAU8XCPalFNhO8W'
+DONE_ID  = '1WanukzWeuqJgUQ7N8YkG9oC23-DIRGjT'
 
-def get_latest_file(files, prefix):
-    """Найти файл с максимальной конечной датой в имени."""
+def list_folder(folder_id):
+    return service.files().list(
+        q=f"'{folder_id}' in parents",
+        pageSize=100,
+        fields="files(id, name, size, mimeType)"
+    ).execute().get('files', [])
+
+inbox_files = list_folder(INBOX_ID)
+new_sales   = [f for f in inbox_files if f['name'].startswith('Продажи_')]
+new_revenue = [f for f in inbox_files if f['name'].startswith('Выручка_')]
+
+print(f"Новые документы: {len(new_sales)} Продажи, {len(new_revenue)} Выручка")
+```
+
+Если `inbox_files` пуст — взять из тематических папок (Продажи / Выручка) как fallback.
+
+### 3. Выбрать файлы с максимальной датой
+
+```python
+def get_latest(files, prefix):
+    """Файл с самой поздней датой окончания периода в имени."""
     pattern = rf'{prefix}_(\d{{4}}-\d{{2}}-\d{{2}})_(\d{{4}}-\d{{2}}-\d{{2}})\.xlsx'
     candidates = []
     for f in files:
@@ -70,40 +92,40 @@ def get_latest_file(files, prefix):
             end_date = datetime.strptime(m.group(2), '%Y-%m-%d')
             candidates.append((end_date, f))
     if not candidates:
-        return None
-    return sorted(candidates, key=lambda x: x[0], reverse=True)[0][1]
+        return None, None, None
+    _, best = sorted(candidates, reverse=True)[0]
+    m = re.match(pattern, best['name'])
+    return best, m.group(1), m.group(2)  # file, period_start, period_end
 
-sales_file = get_latest_file(files, 'Продажи')
-revenue_file = get_latest_file(files, 'Выручка')
+sales_file,   p_start, p_end = get_latest(new_sales or list_folder('17Q7UI2mltbDlKoJrWE6dYchwIvux3mKU'), 'Продажи')
+revenue_file, _,       _     = get_latest(new_revenue or list_folder('1E6aKSFEtLXnIk-8RMAc7fxp5nc2rWqly'), 'Выручка')
 ```
 
-### 3. Скачать файлы
+### 4. Скачать файлы
 
 ```python
-data_layer_path = '/Users/alexander/Github/DS-finance-private/business-finance/data-layer'
+import os
 
-if sales_file:
-    parser.download_file(sales_file['id'], f"{data_layer_path}/{sales_file['name']}")
-    
-if revenue_file:
-    parser.download_file(revenue_file['id'], f"{data_layer_path}/{revenue_file['name']}")
+DATA_LAYER = '/Users/alexander/Github/DS-finance-private/business-finance/data-layer'
+
+def download_if_needed(f):
+    if f is None:
+        return None
+    dest = os.path.join(DATA_LAYER, f['name'])
+    if os.path.exists(dest):
+        print(f"Уже есть локально: {f['name']}")
+        return dest
+    parser.download_file(f['id'], dest)
+    print(f"Скачан: {f['name']}")
+    return dest
+
+sales_path   = download_if_needed(sales_file)
+revenue_path = download_if_needed(revenue_file)
 ```
 
-### 4. Нормализовать данные
+### 5. Нормализовать данные
 
-#### Структура файла Продажи (ожидаемые колонки Сабы):
-- `Номенклатура` — название позиции
-- `Количество` — штук продано
-- `Сумма` — выручка ₽
-- `Точка` / `Подразделение` / аналогичное — название точки
-
-#### Структура файла Выручка:
-- `Дата` — день
-- `Точка` / `Организация` — название точки
-- `Выручка` / `Сумма` — ₽
-- `Себестоимость` / `Расход` — ₽ (если есть, для расчёта маржи)
-
-#### Маппинг точек → slug:
+#### Маппинг точек → slug
 
 ```python
 POINT_SLUG_MAP = {
@@ -118,26 +140,48 @@ POINT_SLUG_MAP = {
 }
 
 def normalize_point(raw_name: str) -> str:
-    normalized = raw_name.lower().strip()
+    s = raw_name.lower().strip()
     for key, slug in POINT_SLUG_MAP.items():
-        if key in normalized:
+        if key in s:
             return slug
-    return raw_name.lower().replace(' ', '_')  # fallback
+    return s.replace(' ', '_')
 ```
 
-#### Нормализованная структура (на выход):
+#### Нормализованная строка (выход)
 
 ```python
-# daily_data: list of dicts
 {
     'date': 'YYYY-MM-DD',
-    'point': 'turgeneva',  # slug
-    'revenue': 146000.0,   # выручка ₽
-    'cost': 55800.0,       # себестоимость ₽ (если есть)
-    'margin_pct': 61.8,    # (revenue - cost) / revenue * 100
-    'source': 'Выручка_2026-03-30_2026-04-14.xlsx'
+    'point': 'turgeneva',   # slug
+    'revenue': 146000.0,    # выручка ₽
+    'cost': 55800.0,        # себестоимость ₽ (если есть в Выручка.xlsx)
+    'margin_pct': 61.8,     # (revenue - cost) / revenue * 100
+    'source': 'Выручка_2026-03-30_2026-04-14.xlsx',
 }
 ```
+
+### 6. ⭐ Переместить обработанные файлы в «Обработано»
+
+```python
+def move_to_done(file_id, file_name, from_folder_id=INBOX_ID):
+    """Переместить файл из inbox в Обработано."""
+    service.files().update(
+        fileId=file_id,
+        addParents=DONE_ID,
+        removeParents=from_folder_id,
+        fields='id, parents'
+    ).execute()
+    print(f"Перемещён в Обработано: {file_name}")
+
+# Перемещать только файлы из inbox (не из тематических папок)
+if sales_file and sales_file in new_sales:
+    move_to_done(sales_file['id'], sales_file['name'])
+
+if revenue_file and revenue_file in new_revenue:
+    move_to_done(revenue_file['id'], revenue_file['name'])
+```
+
+**Важно:** если файл взят из тематической папки (Продажи / Выручка) как fallback — не перемещать, он уже обработан ранее.
 
 ---
 
@@ -145,11 +189,43 @@ def normalize_point(raw_name: str) -> str:
 
 | Ситуация | Действие |
 |----------|----------|
-| Файл уже скачан (то же имя) | Пропустить скачивание, использовать существующий |
-| Файл не найден в Drive | Статус partial, указать какого файла не хватает |
-| Колонка `Точка` не найдена | Проверить альтернативные имена (`Подразделение`, `Организация`, `Объект`) |
+| Inbox пуст | Взять из тематических папок (Продажи / Выручка) как fallback |
+| Файл уже скачан локально | Пропустить скачивание, использовать существующий |
+| Колонка `Точка` не найдена | Проверить: `Подразделение`, `Организация`, `Объект` |
 | Точка не распознана | Логировать как `unknown_XXXX`, не терять данные |
-| token.pickle просрочен | Сообщить пользователю: «Нужно обновить токен Drive» |
+| Перемещение в Обработано упало | Логировать, не блокировать — данные уже скачаны |
+
+---
+
+## Режим: сбор всей истории для статистики
+
+Если нужна динамика/тренды за несколько периодов — передать `all_history=True`.
+Агент читает ВСЕ файлы из «Обработано» + тематических папок, не только последний.
+
+```python
+def collect_all_history(prefix):
+    """Собрать все файлы заданного типа из Обработано и тематических папок."""
+    all_files = []
+    for folder_id in [DONE_ID, '17Q7UI2mltbDlKoJrWE6dYchwIvux3mKU',
+                      '1E6aKSFEtLXnIk-8RMAc7fxp5nc2rWqly']:
+        files = list_folder(folder_id)
+        all_files += [f for f in files if f['name'].startswith(prefix)]
+
+    # Дедупликация по имени
+    seen = {}
+    for f in all_files:
+        seen[f['name']] = f
+    return list(seen.values())
+
+# Использование:
+# if all_history:
+#     all_sales = collect_all_history('Продажи_')
+#     all_revenue = collect_all_history('Выручка_')
+#     # скачать все, нормализовать все периоды, передать в finance-view-builder
+```
+
+Результат передаётся в `finance-view-builder.md` с флагом `multi_period=True` —
+builder строит таблицу динамики по неделям/месяцам вместо одного периода.
 
 ---
 
@@ -157,12 +233,13 @@ def normalize_point(raw_name: str) -> str:
 
 ```python
 ingestion_result = {
-    'status': 'done',  # или 'partial'
+    'status': 'done',      # или 'partial'
     'period_start': 'YYYY-MM-DD',
     'period_end': 'YYYY-MM-DD',
     'files_downloaded': ['Продажи_*.xlsx', 'Выручка_*.xlsx'],
-    'daily_data': [...],  # нормализованные строки
-    'missing': [],        # что отсутствует (для partial)
+    'files_moved_to_done': ['Продажи_*.xlsx'],  # что перемещено из inbox
+    'daily_data': [...],   # нормализованные строки
+    'missing': [],         # что не нашлось (для partial)
 }
 ```
 

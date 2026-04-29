@@ -34,9 +34,58 @@
 
 ---
 
+## Жизненный цикл файлов
+
+```
+Жанна загружает PDF → [Новые документы] 1Jg1Zgj2_ueTV6-NQamAU8XCPalFNhO8W
+                              ↓
+              vk-finance-analyst читает накладную
+                              ↓
+              перемещает в [Обработано] 1WanukzWeuqJgUQ7N8YkG9oC23-DIRGjT
+              или в тематическую папку [Накладные] 15QhRzYuS0AgVanaccz-SF-C_kiqReVd8
+```
+
+Для сбора статистики за несколько периодов — читать ВСЕ PDF из «Обработано» и «Накладные».
+
+---
+
 ## Алгоритм
 
-### 1. Найти и скачать последние Накладные
+### 1. Найти файлы (inbox → тематическая папка → Обработано)
+
+```python
+INBOX_ID    = '1Jg1Zgj2_ueTV6-NQamAU8XCPalFNhO8W'
+DONE_ID     = '1WanukzWeuqJgUQ7N8YkG9oC23-DIRGjT'
+INVOICES_ID = '15QhRzYuS0AgVanaccz-SF-C_kiqReVd8'
+
+def list_folder(folder_id):
+    return service.files().list(
+        q=f"'{folder_id}' in parents",
+        fields="files(id, name, size)"
+    ).execute().get('files', [])
+
+# Приоритет: inbox → тематическая → обработано
+inbox_pdfs = [f for f in list_folder(INBOX_ID) if f['name'].startswith('Накладные_')]
+fallback   = [f for f in list_folder(INVOICES_ID) if f['name'].startswith('Накладные_')]
+source_files = inbox_pdfs or fallback
+
+# Для статистики — собрать все периоды:
+# all_pdfs = inbox_pdfs + list_folder(INVOICES_ID) + [f for f in list_folder(DONE_ID) if f['name'].startswith('Накладные_')]
+```
+
+После обработки — переместить из inbox в Обработано:
+```python
+def move_to_done(file_id, file_name):
+    service.files().update(
+        fileId=file_id,
+        addParents=DONE_ID,
+        removeParents=INBOX_ID,
+        fields='id, parents'
+    ).execute()
+    print(f"Перемещён в Обработано: {file_name}")
+```
+
+### 2. Скачать последние Накладные
 
 ```python
 import sys
