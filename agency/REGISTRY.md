@@ -1,7 +1,7 @@
 ---
 type: agency-registry
-version: 1.2
-updated: 2026-04-27
+version: 1.3
+updated: 2026-04-29
 ---
 
 # Реестр ИИ-агентов DS-агентства
@@ -203,6 +203,20 @@ updated: 2026-04-27
 
 ---
 
+## 13. VK Finance Analyst (Аналитик финансовых данных)
+
+| | |
+|-|-|
+| **Домен** | `DS-finance-private` / VK-offee / Google Drive (Саби-отчёты) |
+| **Специализация** | Ingestion Excel-отчётов из Drive, нормализация по точкам, Finance View (выручка, маржа, тренд, аномалии) |
+| **Модель по умолчанию** | Sonnet |
+| **Инструменты** | `google_drive_parser.py`, Drive папки Продажи/Выручка, `DS-finance-private/business-finance/` |
+| **Нанимать когда** | Жанна загрузила новые отчёты Сабы → нужен Finance View; инвентаризация финансов точек |
+| **Не нанимать когда** | Нужен verdict freeze/keep/invest (→ Financial Consultant); нужен анализ остатков/закупок (→ Warehouse Demand Analyst) |
+| **Файл** | `agency/agents/vk-finance-analyst.md` ✅ |
+
+---
+
 ## Матрица выбора
 
 | Задача | Агент | Модель |
@@ -212,6 +226,7 @@ updated: 2026-04-27
 | Разобрать свежий склад + ABC + закупки | Warehouse Demand Analyst | Sonnet |
 | Собрать реестр заметок / карту доменов | Knowledge Registry Curator | Sonnet |
 | Подготовить официальный запрос / follow-up по Парку | Park Permitting & Infrastructure Coordinator | Sonnet |
+| Инвентаризация финансов / Finance View по точкам | VK Finance Analyst | Sonnet |
 | Собрать finance view / funding gap / cash verdict | Financial Consultant | Sonnet |
 | Письмо архитектору / анализ парка | Park Architect | Sonnet |
 | Исправить ГПХ / кадровый вопрос | HR Specialist | Sonnet |
