@@ -94,6 +94,23 @@ DS-agent-workspace/
 - `extractor/extraction-reports/` — текущий канонический путь для extraction reports в этом repo.
 - `strategist/` и `verifier/` сейчас не являются надёжным местом для оценки live активности роли.
 
+### 4.1.2. Scout contract
+
+`Scout` в этой экосистеме — review/input слой для ядра Церена, а не второй центр управления.
+
+Правильный маршрут:
+
+`Scout -> report/candidates -> Strategist review -> DayPlan / WeekPlan / Требует внимания`
+
+Следствия:
+
+- `Scout` не должен создавать competing priority layer;
+- `Scout` не должен обновлять `DayPlan`, `WeekPlan`, `MEMORY.md` напрямую;
+- выходы `Scout` живут в `scout/results/...` и проходят review перед materialization;
+- наличие папки `scout/` не означает, что `Scout` обязан быть live launchd-service.
+
+Подробности: `scout/README.md`.
+
 ### 4.2. Truth for runtime
 
 Если нужно понять, что реально живо сейчас, смотреть нужно не на список папок, а на:
