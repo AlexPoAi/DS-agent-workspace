@@ -18,8 +18,8 @@
 
 | Тип данных | Folder ID | Ссылка |
 |-----------|-----------|--------|
-| Продажи | `1g2Pq-cYVT2cSkd9DwBCV-EJBHYDvzHw9` | [открыть](https://drive.google.com/drive/folders/1g2Pq-cYVT2cSkd9DwBCV-EJBHYDvzHw9) |
-| Выручка | В той же папке или рядом — искать файлы `Выручка_*.xlsx` | |
+| Продажи | `17Q7UI2mltbDlKoJrWE6dYchwIvux3mKU` | [открыть](https://drive.google.com/drive/folders/17Q7UI2mltbDlKoJrWE6dYchwIvux3mKU) |
+| Выручка | `1E6aKSFEtLXnIk-8RMAc7fxp5nc2rWqly` | [открыть](https://drive.google.com/drive/folders/1E6aKSFEtLXnIk-8RMAc7fxp5nc2rWqly) |
 
 > Карта всех папок Drive: `DS-strategy/exocortex/reference-google-drive-vkoffee.md`
 
