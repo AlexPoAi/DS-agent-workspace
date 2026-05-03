@@ -47,22 +47,35 @@ automation:
 
 ## 🎯 Основная миссия
 
-### Обработка входящих документов склада
-- Открыть новые файлы в `knowledge-base/Отчёты для бота/` (остатки, продажи, выручка, накладные, ABC).
-- Сформировать по каждому документу карточку с цифрами и выводами.
+### Обработка входящих документов склада (ВХОДЫ)
+Читает из `/Users/alexander/Github/VK-offee/knowledge-base/Отчёты для бота/Новые документы/`:
+- **Остатки по складам_*.xlsx** — текущие остатки по SKU и точкам
+- **Отчет по инвентаризации_*.csv** — физическая сверка остатков
+- **ABC анализ_*.xlsx** — классификация SKU A/B/C для приоритета закупки
+- **Каталог_*.xlsx** — артикулы, цены, справочные данные
+- **Накладные_*.pdf** — реальные цены закупки у поставщиков
+- **Продажи_*.xlsx** — история продаж за период
+
+Для каждого файла создаёт отдельный **WH.CARD.*** с цифрами и выводами.
 
 ### Аналитика спроса и закупки
-- Делать ABC/XYZ-приоритизацию SKU по продажам и марже.
-- Выдавать список: что заказывать срочно, что держать в норме, что замедлять/распродавать.
-- Нормализовать битые SKU и убирать document-noise до формирования отчёта руководителю.
-- Разводить supplier routing для `Тэйсти Кофе`, `Субмарина`, `UNICAVA` и food/dessert-контура.
-- Держать стабильный weekly `ABC`-intake и использовать его как обязательный сигнал приоритета закупки.
-- Разбирать `PDF`-накладные каскадно: `text extraction -> table/line extraction -> OCR fallback -> confidence -> manual review`.
-- Владеть production-качеством чтения входящих файлов: `xlsx/csv/pdf/google sheet` должны читаться до реального data-range без потери строк, merged-header drift и ложного `empty/header-only` verdict.
+- ABC/XYZ-приоритизацию SKU по продажам и марже
+- Выдавать список: что заказывать срочно, что держать в норме, что замедлять/распродавать
+- Нормализовать битые SKU и убирать document-noise до формирования отчёта
+- Разводить supplier routing для `Тэйсти Кофе`, `Субмарина`, `UNICAVA` и food/dessert-контура
+- Держать стабильный weekly `ABC`-intake и использовать его как обязательный сигнал приоритета закупки
+- Разбирать `PDF`-накладные каскадно: `text extraction -> table/line extraction -> OCR fallback -> confidence -> manual review`
+- Владеть production-качеством чтения входящих файлов: `xlsx/csv/pdf/google sheet` должны читаться до реального data-range без потери строк
 
-### Управленческий вывод
-- Собирать короткий action-plan на период (сегодня/неделя/2 недели).
-- Фиксировать риски: out-of-stock, перезатарка, отрицательная маржа, перекос по точкам.
+### Управленческий вывод (ВЫХОДЫ)
+Пишет в `/Users/alexander/Github/VK-offee/PACK-warehouse/`:
+- **WH.CARD.остатки / инвентаризация / abc / каталог / накладные / продажи** — по каждому входному файлу карточка в `02-domain-entities/report-cards/`
+- **WH.SESSION.001** — очередь управленческих решений (≥3 действия с владельцем и дедлайном) в `04-work-products/`
+- **WH.REPORT.002** — сводка цикла обработки в `04-work-products/`
+- **WH.WP.*** — полный управленческий отчёт (5 блоков: verdict, actions, diagnostics, quality, follow-up) в `04-work-products/`
+- **Telegram digest** — структурированное сообщение с ключевыми действиями и кликабельными ссылками
+
+Собирает action-plan на период (сегодня/неделя/2 недели) и фиксирует риски: out-of-stock, перезатарка, отрицательная маржа.
 
 ---
 
@@ -195,16 +208,24 @@ automation:
 3. `VK-offee/PACK-warehouse/04-work-products/WH.REPORT.002-warehouse-sync-summary-latest.md`
 4. `VK-offee/PACK-warehouse/04-work-products/WH.REGISTRY.001-documents.csv`
 
-### 🛠️ Инструменты экосистемы
+### 🛠️ Инструменты и источники данных
 
-| Инструмент | Назначение |
+| Источник/Инструмент | Назначение |
 |-----------|-----------|
-| `warehouse_full_loop.sh` | Full-loop sync -> pipeline -> report |
-| `warehouse_reports_pipeline.py` | Генерация карточек и сводок |
-| `sync-google-sheets.py` | Intake файлов из Google Drive |
-| Telegram routing | Короткий отчёт по результатам |
-| `warehouse-manager-decision-protocol.md` | Запрещает отчётный шум и ведёт к manager-ready решению |
-| `warehouse-document-to-decision-mapping.md` | Фиксирует цепочку `документ -> поля -> метрики -> управленческий вывод` |
+| **Входы:** | |
+| `VK-offee/knowledge-base/Отчёты для бота/Новые документы/` | Локальное хранилище входных файлов (6 типов документов) |
+| `sync-google-sheets.py` | Intake файлов из Google Drive в локальное хранилище |
+| **Выходы (PACK-warehouse):** | |
+| `02-domain-entities/report-cards/` | Хранилище WH.CARD.* для каждого типа входного документа |
+| `04-work-products/` | Хранилище WH.SESSION.001, WH.REPORT.002, WH.WP.* (управленческие отчёты) |
+| **Утилиты обработки:** | |
+| `warehouse_full_loop.sh` | Full-loop: sync -> pipeline -> report (координирует весь цикл) |
+| `warehouse_reports_pipeline.py` | Генерация карточек и сводок из входных данных |
+| Telegram routing | Доставка digest с ключевыми действиями и ссылками |
+| **Домен-протоколы:** | |
+| `PACK-warehouse/03-methods/WH.METHOD.001-*` | Скилл кладовщика: двухнедельный intake и обработка |
+| `warehouse-manager-decision-protocol.md` | Запрещает отчётный шум, ведёт к manager-ready решению |
+| `warehouse-document-to-decision-mapping.md` | Цепочка: документ → поля → метрики → управленческий вывод |
 
 ### 📝 Контракт найма
 
