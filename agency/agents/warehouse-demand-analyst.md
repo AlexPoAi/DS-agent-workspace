@@ -14,8 +14,18 @@ pack-context:
   - VK-offee/PACK-warehouse
   - VK-offee/knowledge-base/Отчёты для бота
   - VK-offee/knowledge-base/saby-reports
-version: 1.0
+version: 1.1
 created: 2026-04-19
+updated: 2026-05-03
+
+# ── Автоматизация (встроенные пути) ──
+zhanna-reports-folder: https://drive.google.com/drive/folders/167ojs-dghvBEO-tmQDUshvP9wAKqFIse
+zhanna-reports-folder-id: "167ojs-dghvBEO-tmQDUshvP9wAKqFIse"
+automation:
+  trigger: "manual + scheduler (biweekly on Thursdays)"
+  frequency: "раз в 2 недели, автоматически"
+  inputs: "новые отчёты из папки Жанны"
+  outputs: "обновлены данные финконтура и Pack кладовщика"
 ---
 
 # 📦 Warehouse Demand Analyst — Аналитик склада и спроса

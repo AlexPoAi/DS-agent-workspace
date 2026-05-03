@@ -2,7 +2,13 @@
 skill: warehouse-manager-decision-protocol
 agent: warehouse-demand-analyst
 created: 2026-04-20
+updated: 2026-05-03
 status: active
+
+# ── Встроенные параметры (не требуют ввода) ──
+zhanna-drive-folder: "167ojs-dghvBEO-tmQDUshvP9wAKqFIse"
+zhanna-drive-url: "https://drive.google.com/drive/folders/167ojs-dghvBEO-tmQDUshvP9wAKqFIse"
+automation: "Работает автоматически раз в 2 недели. Запуск: '/warehouse-process' или scheduler"
 ---
 
 # Warehouse Manager Decision Protocol
