@@ -19,12 +19,13 @@ created: 2026-04-19
 updated: 2026-05-03
 
 # ── Автоматизация (встроенные пути) ──
-zhanna-reports-folder: https://drive.google.com/drive/folders/167ojs-dghvBEO-tmQDUshvP9wAKqFIse
-zhanna-reports-folder-id: "167ojs-dghvBEO-tmQDUshvP9wAKqFIse"
+bot-reports-folder: https://drive.google.com/drive/folders/167ojs-dghvBEO-tmQDUshvP9wAKqFIse
+bot-reports-folder-id: "167ojs-dghvBEO-tmQDUshvP9wAKqFIse"
+note: "⚠️ Имя папки может быть переименовано позже. Если тестирование покажет другое имя — обновить folder ID"
 automation:
-  trigger: "manual + scheduler (biweekly on Thursdays)"
-  frequency: "раз в 2 недели, автоматически"
-  inputs: "новые отчёты из папки Жанны"
+  trigger: "manual только (при команде '/warehouse-process' или эквивалент)"
+  frequency: "не автоматическая, запускается пользователем вручную"
+  inputs: "новые отчёты из папки отчетов бота"
   outputs: "обновлены данные финконтура и Pack кладовщика"
 ---
 
