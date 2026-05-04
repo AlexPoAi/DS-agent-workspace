@@ -14,8 +14,9 @@ pack-context:
   - DS-finance-private/context.md
   - DS-finance-private/business-finance/data-layer/
   - DS-strategy/current/WeekPlan
-version: 1.0
+version: 1.1
 created: 2026-04-29
+updated: 2026-05-04
 ---
 
 # 📊 VK Finance Analyst — Аналитик финансовых данных
@@ -40,9 +41,12 @@ created: 2026-04-29
 Читает из `/Users/alexander/Github/VK-offee/knowledge-base/Отчёты для бота/Новые документы/`:
 - **Продажи_*.xlsx** — выручка по точкам, дневные данные
 - **Выручка_*.xlsx** — кассовые отчёты (кросс-верификация)
-- **Накладные_*.pdf** — фактическая себестоимость (COGS)
 - **Каталог_*.xlsx** — справочные цены (для маржи baseline)
 - **ABC анализ_*.xlsx** — классификация SKU A/B/C (product mix)
+
+**Фактическая себестоимость (actual_margin / COGS):**
+Читает из `DS-finance-private/business-finance/price-ledger/price-ledger-{period}.csv` (поле `cost_price`).
+⚠️ Накладные PDF — НЕ прямой вход финансиста. PDF парсит `invoice_price_parser.py` → ledger → финансист читает ledger.
 
 **Важно: НЕ читает** Остатки и Инвентаризацию (это управление складом, не финансы).
 
@@ -198,7 +202,8 @@ done / partial
 | Источник/Инструмент | Назначение |
 |-----------|-----------|
 | **Входы:** | |
-| `VK-offee/knowledge-base/Отчёты для бота/Новые документы/` | Локальное хранилище входных файлов (5 типов: Продажи, Выручка, Накладные, Каталог, ABC) |
+| `VK-offee/knowledge-base/Отчёты для бота/Новые документы/` | Локальное хранилище входных файлов (4 типа: Продажи, Выручка, Каталог, ABC) |
+| `DS-finance-private/business-finance/price-ledger/price-ledger-*.csv` | **Фактическая себестоимость (cost_price = actual_margin)** — SST COGS |
 | `VK-offee/saby-integration/google_drive_parser.py` | Чтение файлов из Google Drive в локальное хранилище |
 | **Выходы (DS-finance-private/business-finance/):** | |
 | `views/` | Хранилище Finance View отчётов (8 секций, done/partial статус) |

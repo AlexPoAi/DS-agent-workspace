@@ -14,9 +14,9 @@ pack-context:
   - VK-offee/PACK-warehouse
   - VK-offee/knowledge-base/Отчёты для бота
   - VK-offee/knowledge-base/saby-reports
-version: 1.1
+version: 1.2
 created: 2026-04-19
-updated: 2026-05-03
+updated: 2026-05-04
 
 # ── Автоматизация (встроенные пути) ──
 bot-reports-folder: https://drive.google.com/drive/folders/167ojs-dghvBEO-tmQDUshvP9wAKqFIse
@@ -53,8 +53,11 @@ automation:
 - **Отчет по инвентаризации_*.csv** — физическая сверка остатков
 - **ABC анализ_*.xlsx** — классификация SKU A/B/C для приоритета закупки
 - **Каталог_*.xlsx** — артикулы, цены, справочные данные
-- **Накладные_*.pdf** — реальные цены закупки у поставщиков
 - **Продажи_*.xlsx** — история продаж за период
+
+**Закупочные цены (COGS):**
+Читает из `VK-offee/knowledge-base/price-ledger/price-ledger-{period}.csv` (поле `cost_price`).
+⚠️ Накладные PDF парсятся отдельно через `invoice_price_parser.py` → ledger. Кладовщик НЕ читает PDF накладные напрямую.
 
 Для каждого файла создаёт отдельный **WH.CARD.*** с цифрами и выводами.
 
@@ -213,7 +216,8 @@ automation:
 | Источник/Инструмент | Назначение |
 |-----------|-----------|
 | **Входы:** | |
-| `VK-offee/knowledge-base/Отчёты для бота/Новые документы/` | Локальное хранилище входных файлов (6 типов документов) |
+| `VK-offee/knowledge-base/Отчёты для бота/Новые документы/` | Локальное хранилище входных файлов (5 типов: без Накладных) |
+| `VK-offee/knowledge-base/price-ledger/price-ledger-*.csv` | **Закупочные цены (cost_price)** — SST для каталожной маржи |
 | `sync-google-sheets.py` | Intake файлов из Google Drive в локальное хранилище |
 | **Выходы (PACK-warehouse):** | |
 | `02-domain-entities/report-cards/` | Хранилище WH.CARD.* для каждого типа входного документа |
