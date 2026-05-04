@@ -71,11 +71,12 @@ automation:
 - Владеть production-качеством чтения входящих файлов: `xlsx/csv/pdf/google sheet` должны читаться до реального data-range без потери строк
 
 ### Управленческий вывод (ВЫХОДЫ)
-Пишет в `/Users/alexander/Github/VK-offee/PACK-warehouse/`:
-- **WH.CARD.остатки / инвентаризация / abc / каталог / накладные / продажи** — по каждому входному файлу карточка в `02-domain-entities/report-cards/`
-- **WH.SESSION.001** — очередь управленческих решений (≥3 действия с владельцем и дедлайном) в `04-work-products/`
-- **WH.REPORT.002** — сводка цикла обработки в `04-work-products/`
-- **WH.WP.*** — полный управленческий отчёт (5 блоков: verdict, actions, diagnostics, quality, follow-up) в `04-work-products/`
+Пишет в `/Users/alexander/Github/VK-offee/PACK-warehouse/reports/`:
+- **warehouse-report-YYYY-MM-DD_YYYY-MM-DD.md** — полный управленческий отчёт (5 блоков: источники, цифры, инвентаризация, рекомендации, риски)
+
+Формат имени файла: `warehouse-report-{period_start}_{period_end}.md`
+Аналогично Finance View: `DS-finance-private/business-finance/views/finance-view-{period}.md`
+
 - **Telegram digest** — структурированное сообщение с ключевыми действиями и кликабельными ссылками
 
 Собирает action-plan на период (сегодня/неделя/2 недели) и фиксирует риски: out-of-stock, перезатарка, отрицательная маржа.
@@ -219,9 +220,8 @@ automation:
 | `VK-offee/knowledge-base/Отчёты для бота/Новые документы/` | Локальное хранилище входных файлов (5 типов: без Накладных) |
 | `VK-offee/knowledge-base/price-ledger/price-ledger-*.csv` | **Закупочные цены (cost_price)** — SST для каталожной маржи |
 | `sync-google-sheets.py` | Intake файлов из Google Drive в локальное хранилище |
-| **Выходы (PACK-warehouse):** | |
-| `02-domain-entities/report-cards/` | Хранилище WH.CARD.* для каждого типа входного документа |
-| `04-work-products/` | Хранилище WH.SESSION.001, WH.REPORT.002, WH.WP.* (управленческие отчёты) |
+| **Выходы:** | |
+| `VK-offee/PACK-warehouse/reports/` | **Отчёты кладовщика** (warehouse-report-YYYY-MM-DD_YYYY-MM-DD.md) |
 | **Утилиты обработки:** | |
 | `warehouse_full_loop.sh` | Full-loop: sync -> pipeline -> report (координирует весь цикл) |
 | `warehouse_reports_pipeline.py` | Генерация карточек и сводок из входных данных |
